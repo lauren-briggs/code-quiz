@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/style.css" />
+    <!--link to adobe typekit for typeface-->
+    <link rel="stylesheet" href="https://use.typekit.net/xhi1jxe.css">
+    <title>Code Quiz</title>
+</head>
+
+<body>
+    <header>
+        <!--container for score button and timer-->
+        <div class="container">
+            <div><button class="score-btn" type="button">View Highscores</button></div>
+            <div class="timer">Time: 15s</div>
+        </div>
+    </header>
+    <main>
+        <!--div holding the quiz title, intro paragraph and start button-->
+        <div class="intro">
+            <h1>Coding Quiz Challenge</h1>
+            <p>Answer the following code related questiosn within the time limit! Incorrect answers will deduct 5
+                seconds from the clock.</p>
+            <button class="start-btn" type="button">START THE QUIZ</button>
+        </div>
+        <section class="quiz">
+            <!--section holding the quiz - questions and answers and correct/wrong message-->
+            <div class="question">
+                <h2>Question</h2>
+            </div>
+            <div class="answers">
+                <input type="radio" id="rdAnswer1" class="answer-btn" name="answer" value="ans1">
+                <label id="ans1" for="ans1">Answer</label><br>
+
+                <input type="radio" id="rdAnswer2" class="answer-btn" name="answer" value="ans2">
+                <label id="ans2" for="ans2">Answer</label><br>
+
+                <input type="radio" id="rdAnswer3" class="answer-btn" name="answer" value="ans3">
+                <label id="ans3" for="ans3">Answer</label><br>
+
+                <input type="radio" id="rdAnswer4" class="answer-btn" name="answer" value="ans4">
+                <label id="ans4" for="ans4">Answer</label><br>
+            </div>
+            <!-- <button class="next-btn" type="button">Next Question</button> -->
+            <div class="correct">
+                <h3>
+                    <!--Section for displaying correct/wrong-->
+                </h3>
+            </div>
+        </section>
+
+        <!--Section for displaying final score and entering name-->
+        <section class="game-over">
+            <h1>Game Over</h1>
+            <p id="final-score"></p>
+            <form class="name-submit">
+                <div>
+                    <label id="name-input" for="name">Name: </label>
+                    <input type="text-area" class="name" name="name">
+                    <input type="submit" value="SUBMIT">
+                </div>
+            </form>
+            <br>
+            <button class="back-btn" type="button">BACK</button>
+
+        </section>
+        <!--Section for displaying high scores-->
+        <section class="high-scores">
+            <h1>Highscores</h1>
+            <button class="back-btn-hs" type="button">BACK</button><br><br>
+            <button class="clear-btn" type="button">CLEAR</button><br><br>
+
+        </section>
+
+    </main>
+
+
+    <!--Link to JS script-->
+    <script src="./assets/script.js"></script>
+</body>
+
+</html>
