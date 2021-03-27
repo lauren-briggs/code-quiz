@@ -68,3 +68,10 @@ I used adobe typekit and included the link to the stylesheet in the head.
 
 //Defining goBack function - show intro again, hide the rest of the elements, reset currentIndex, score, time left and timer element (not working.)
 
+
+
+## Deployed Site
+[a](https://lauren-briggs.github.io/code-quiz/) 
+
+## Screnshot of deployed site
+[a](assets/img/screenshot.png)
