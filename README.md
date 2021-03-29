@@ -71,7 +71,20 @@ I used adobe typekit and included the link to the stylesheet in the head.
 
 
 ## Deployed Site
-[a](https://lauren-briggs.github.io/code-quiz/) 
+[a Deployed Site](https://lauren-briggs.github.io/code-quiz/) 
 
 ## Screnshot of deployed site
-[a](assets/img/screenshot.png)
+[a Screenshot of site](assets/img/screenshot.png)
+
+//Fixed most bugs
+- relinked js files
+- created a new variable (var currentQuestion = questions[currentIndex];) to reduce unnecessary/repetitive code
+- removed repeating currentIndex++ to prevent questions skipping
+- fixed timer
+- added black colour styling
+- removed repeating timeLeft-- to prevent skipping time
+- fixed localstorage isues
+- changed the name of the key and removed repeating objects
+- added table elements to display existingScoreArr when viewing highscores
+- fixed clear storage button
+

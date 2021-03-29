@@ -30,8 +30,6 @@ var rdAnswer4 = document.querySelector("#rdAnswer4");
 var radio = document.querySelectorAll(".answer-btn");
 //score
 var score = 0;
-//question count
-var questionCount = 0;
 //correct/wrong answer
 var rightWrong = document.querySelector(".correct");
 //back button
@@ -50,8 +48,10 @@ var scoreArr = [];
 var highScoresEl = document.querySelector(".high-scores");
 //final score display p eleemnt
 var finalScore = document.querySelector("#final-score");
-
+//variable to count the number of questions
 var currentIndex = 0;
+
+var timeLeft
 
 //defining the questions and answers in objects and arrays
 const questions = [
@@ -99,22 +99,18 @@ function startQuiz() {
 //timer function
 function startTimer() {
     console.log("The timer has started too");
-    var timeLeft = 15;
+    timeLeft = 15;
     //Using the `setInterval()` method to call a function to be executed every 1500 milliseconds
     var timeInterval = setInterval(function () {
+
+        timerEl.textContent = 'Time: ' + timeLeft + 's';
         //as long as time left is greater than 1 - show the remaining seconds/numerical value of timeLeft
         if (timeLeft > 5) {
-            // Set the `textContent` of `timerEl` to show the remaining seconds
-            timerEl.textContent = 'Time: ' + timeLeft + 's';
-            timerEl.style.color = "black"
-            // Decrement `timeLeft` by 1
-            timeLeft--;
+            timerEl.style.color = "black";
         } if (timeLeft <= 5) {
-            timerEl.textContent = 'Time: ' + timeLeft + 's';
             timerEl.style.color = "red";
-            timeLeft--;
             console.log("5 Seconds Left")
-        } if (timeLeft === 0 || questionCount === questions.length) {
+        } if (timeLeft <= 0 || currentIndex === questions.length) {
             //once timeLeft gets to 0 OR all the questions have been answered, set timerEl to an empty string
             timerEl.textContent = "Your time is up";
             //clear interval to stop timer
@@ -123,7 +119,9 @@ function startTimer() {
             gameOver();
             console.log("Time is up");
         }
-    }, 1500);
+        // Decrement `timeLeft` by 1
+        timeLeft--;
+    }, 1000);
 }
 
 function setQuestion() {
@@ -135,26 +133,24 @@ function setQuestion() {
     answerBtn.innerHTML = "";
 
     //set the question element to the current question in the array
-    questionEl.textContent = questions[currentIndex].question;
+    var currentQuestion = questions[currentIndex];
+    questionEl.textContent = currentQuestion.question;
+
     questionEl.style.fontWeight = "bolder";
     questionEl.style.fontSize = "22px";
     questionEl.style.paddingBottom = "5px";
-    //replace the text content from HTML DOM with answers from the array using a for loop
-    //for (var i = 0; i < questions[currentIndex].answers.length; i++) {
-    ans1.textContent = questions[currentIndex].answers[0];
-    rdAnswer1.value = questions[currentIndex].answers[0];
-    //rdAnswer1.setAttribute("data-answer", questions[currentIndex].correctAnswer)
-    ans2.textContent = questions[currentIndex].answers[1];
-    rdAnswer2.value = questions[currentIndex].answers[1];
-    //rdAnswer2.setAttribute("data-answer", questions[currentIndex].correctAnswer)
-    ans3.textContent = questions[currentIndex].answers[2];
-    rdAnswer3.value = questions[currentIndex].answers[2];
-    //ans3.setAttribute("data-answer", questions[i].correctAnswer)
-    ans4.textContent = questions[currentIndex].answers[3];
-    rdAnswer4.value = questions[currentIndex].answers[3];
-    //ans4.setAttribute("data-answer", questions[i].correctAnswer)
-    // questionEl.textContent = questions[currentIndex].question;
-    // }
+
+    ans1.textContent = currentQuestion.answers[0];
+    rdAnswer1.value = currentQuestion.answers[0];
+
+    ans2.textContent = currentQuestion.answers[1];
+    rdAnswer2.value = currentQuestion.answers[1];
+
+    ans3.textContent = currentQuestion.answers[2];
+    rdAnswer3.value = currentQuestion.answers[2];
+
+    ans4.textContent = currentQuestion.answers[3];
+    rdAnswer4.value = currentQuestion.answers[3];
 }
 
 //add event listener for click on answer buttons
@@ -169,24 +165,23 @@ function checkAns(event) {
         if (event.target.value === questions[currentIndex].correctAnswer) {
             //remove text from answerBtn
             answerBtn.innerHTML = ""
-            //increase currentIndex
-            currentIndex++
             //increase score
             score++
             //print score
             console.log("Score: " + score);
             //print Correct! on the screen
             rightWrong.textContent = "Correct!";
+            console.log("Correct!")
 
-        } //if not thrn...
+        } //if not then...
         else {
             //remove text from answerBtns
             answerBtn.innerHTML = "";
-            //increase index
-            currentIndex++
             //TO DO: need to deduct time
+            timeLeft -= 5;
             //print Wrong! on the screen
             rightWrong.textContent = "Wrong!";
+            console.log("Wrong!")
 
         }
     } else {
@@ -197,7 +192,7 @@ function checkAns(event) {
     setTimeout(function () {
         event.target.checked = false;
         setQuestion()
-    }, 500)
+    }, 200)
 }
 
 //game Over function
@@ -206,10 +201,9 @@ function gameOver() {
     quizEl.style.display = "none";
     //show gameOverEl content
     gameOverEl.style.display = "block";
-    //print players score on screen
+    // //print players score on screen
     finalScore.textContent = "Your Score: " + score;
     console.log("Score: " + score);
-    timerEl = 0;
 }
 
 
@@ -230,40 +224,30 @@ function handleFormSubmit(event) {
         return;
     }
 
-    //push the users name and score to the score array
-    scoreArr.push({ userName, score });
-    console.log(scoreArr);
-
-
     //print "player (name) got a score of (score)" to the console log
     console.log("Player " + userName + " got a score of " + score);
 
     //check if scores are stored already and creates storage if not
-    var existingScoreArr = JSON.parse(localStorage.getItem(scoreArr))
+    var existingScoreArr = JSON.parse(localStorage.getItem("scoreArr"))
     if (!existingScoreArr) {
         existingScoreArr = []
     }
     //adding name and score to array
-    existingScoreArr.push(scoreArr);
+    existingScoreArr.push({ userName, score });
     //storing score
-    localStorage.setItem(scoreArr, JSON.stringify(existingScoreArr));
+    localStorage.setItem("scoreArr", JSON.stringify(existingScoreArr));
 
     console.log(window.localStorage.scoreArr)
 
-    console.log("This is the existing score array: " + existingScoreArr);
+    console.log("This is the existing score array: " + JSON.stringify(existingScoreArr));
     console.log("This is the new score: " + scoreArr);
 
     //print name and score to page
-    var scoreList = document.createElement("div");
-    scoreList.innerHTML = nameSubmit.value + " - " + score;
-    highScoresEl.appendChild(scoreList);
+    // var scoreList = document.createElement("div");
+    // scoreList.innerHTML = nameSubmit.value + " - " + score;
+    // highScoresEl.appendChild(scoreList);
 
     showHighscore();
-
-    // //clear form
-
-    // document.querySelector('input[name="name"]').value('');
-
 }
 
 
@@ -274,20 +258,43 @@ function showHighscore() {
     intro.style.display = "none";
     highScoresEl.style.display = "block";
 
-    var existingScoreArr = JSON.parse(localStorage.getItem("score"))
-
-    //function to clear storage
-    clearScores.addEventListener("click", function () {
+    var existingScoreArr = JSON.parse(localStorage.getItem("scoreArr"))
+    if (!existingScoreArr) {
         existingScoreArr = []
-        window.localStorage.clear();
+    }
+
+    document.getElementById("highscore-list").innerHTML = "";
+
+    var table = document.createElement("table");
+
+    existingScoreArr.map(function (e) {
+        console.log(e);
+        var tr = document.createElement("tr");
+        var td1 = document.createElement("td");
+        var td2 = document.createElement("td");
+
+        td1.innerHTML = e.userName;
+        td2.innerHTML = e.score;
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        table.appendChild(tr);
+
     });
+
+    document.getElementById("highscore-list").appendChild(table);
 }
+
+//function to clear storage
+function clearStorage() {
+    document.getElementById("highscore-list").innerHTML = "";
+    window.localStorage.clear();
+}
+
+clearScores.addEventListener("click", clearStorage);
 
 scoreBtn.addEventListener("click", showHighscore);
 
 form.addEventListener("submit", handleFormSubmit);
-
-
 
 //call start quiz function when back button is clicked
 backBtn.addEventListener("click", goBack);
@@ -298,19 +305,13 @@ backBtnHs.addEventListener("click", goBack);
 
 //function to go back/start over
 function goBack() {
+    timerEl.style.color = "black";
     intro.style.display = "block";
     quizEl.style.display = "none";
     gameOverEl.style.display = "none";
     highScoresEl.style.display = "none";
     currentIndex = 0;
     score = 0;
+    timeLeft = 15;
+    timerEl.textContent = 'Time: ' + timeLeft + 's';
 }
-
-
-
-
-
-//ISSUES
-//functions void
-//event listeners on radio not working and questions don't loop when answered
-//back button only works on game over
