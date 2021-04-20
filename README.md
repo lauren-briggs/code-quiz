@@ -2,12 +2,11 @@
 A coding quiz created using JS - Week 04 Homework
 
 
-## I'm sorry it's not completely finished! There are still some issues but wanted to submit what I've got
+## Deployed Site
+[Click here](https://lauren-briggs.github.io/code-quiz/) 
 
-- need to fix the timer so that it restarts when goBack(); is called
-- need to clear storage and score list
-
-
+## Screnshot of deployed site
+![Screenshot of deployed site](assets/img/screenshot.png)
 ## Acceptance Criteria
 
 ```
@@ -68,13 +67,6 @@ I used adobe typekit and included the link to the stylesheet in the head.
 
 //Defining goBack function - show intro again, hide the rest of the elements, reset currentIndex, score, time left and timer element (not working.)
 
-
-
-## Deployed Site
-[a Deployed Site](https://lauren-briggs.github.io/code-quiz/) 
-
-## Screnshot of deployed site
-[a Screenshot of site](assets/img/screenshot.png)
 
 //Fixed most bugs
 - relinked js files
